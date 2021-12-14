@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion ZIBELLI Ludovic- Modifier une facture{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h1 class="text-center">Modifier la facture</h1>
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Accueil</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('tdbprojet', {id: id}) }}">{{ nom }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Modification de la facture</li>
+            </ol>
+        </nav>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col">
+                <label>Numero de la facture</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.numero_de_facture) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label>Devis/Facture</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.facture_devis) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label>Date de paiement</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.date_de_paiement) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label>Facture payer ?</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.payer) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label>Montant de la facture en €</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                {{ form_widget(form.montant_facture) }}
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col">
+                <button class="btn btn-primary btn-lg" type="submit">Modifier</button>
+            </div>
+        </div>
+            {{ form_end(form) }}
+    </div>
+
+
+
+
+{% endblock %}

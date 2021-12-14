@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche plan de maintenance - Maintenance{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1 class="text-center">Plan de maintenace</h1>
+        <h2 class="text-center">Fiche du plan de maintenance</h2>
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('maintenance') }}">Tableau de bord plan de maintenance</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ plan.title }}</li>
+            </ol>
+        </nav>
+    </div>
+    <br>
+    <div class="row text-center">
+        <table class="table table-bordered">
+            <tr>
+                <th class="table-secondary">Titre</th>
+                <td>{{ plan.title }}</td>
+                <th class="table-secondary">Projet associer</th>
+                <td>{{ plan.projet }}</td>
+                <th class="table-secondary"></th>
+                <td class="table-secondary"></td>
+            </tr>
+            <tr>
+                <th class="table-secondary">Description</th>
+                <td colspan="5">{{ plan.description }}</td>
+            </tr>
+            <tr>
+                <th class="table-secondary">Date de debut</th>
+                <td>{{ plan.start|date("d/m/Y H:i") }}</td>
+                <th class="table-secondary">Date de fin</th>
+                <td colspan="3">{{ plan.end|date("d/m/Y H:i") }}</td>
+            </tr>
+            <tr>
+                <th class="table-secondary">Couleur de fond</th>
+                <td><input type="color" value="{{ plan.backgroundcolor }}"></td>
+                <th class="table-secondary">Couleur de text</th>
+                <td><input type="color" value="{{ plan.textcolor }}"></td>
+                <th class="table-secondary">Couleur de la bordure</th>
+                <td><input type="color" value="{{ plan.bordercolor }}"></td>
+            </tr>
+        </table>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-primary btn-block" href="{{ path('editmaintenance', {id: plan.id}) }}" ><i class="fas fa-edit"></i>Editer</a>
+        </div>
+        <div class="col">
+            <form method="POST" action="{{ path ('deletemaintenance', {id: plan.id})}}" style="display:inline-block">
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ plan.id)}}">
+                <button class="btn btn-danger btn-block" onclick="return confirm('Voulez-vous vraiment supprimer le plan de maintenance ?')"><i class="fas fa-trash-alt"></i>Supprimer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

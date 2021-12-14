@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion ZIBELLI Ludovic- CRM Nouveau Client{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    <div class="container">
+        {% for message in app.flashes('success')%}
+            <div class="alert alert-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <h1 class="text-center">Ajouter un client</h1>
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Accueil</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Nouveau client</li>
+            </ol>
+        </nav>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Nom de la societé</h6>
+                        {{ form_widget(form.nom) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Adresse postal</h6>
+                        {{ form_widget(form.adresse_postal) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Code postal</h6>
+                        {{ form_widget(form.code_postal) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Ville</h6>
+                        {{ form_widget(form.ville) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Raison sociale</h6>
+                        {{ form_widget(form.raison_sociale) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Numero siret</h6>
+                        {{ form_widget(form.numero_siret) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Type de societé</h6>
+                        {{ form_widget(form.genre_de_societe) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">E-mail de la societé</h6>
+                        {{ form_widget(form.email) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Numéro de téléphone de la societé</h6>
+                        {{ form_widget(form.telephone) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Site web de la societé</h6>
+                        {{ form_widget(form.site_web) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Facebook de la societé</h6>
+                        {{ form_widget(form.facebook) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Twitter de la societé</h6>
+                        {{ form_widget(form.twitter) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Associer a un projet</h6>
+                        {{ form_widget(form.projet) }}
+                    </div>
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <h6 class="card-subtitle mb-2 text-muted">Autres infos</h6>
+                        {{ form_widget(form.autre_infos) }}
+                    </div>
+                    <br>
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <button class="btn btn-primary btn-block" type="submit">Ajouter le nouveau client</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

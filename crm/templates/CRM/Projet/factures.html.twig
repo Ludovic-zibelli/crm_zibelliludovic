@@ -1,0 +1,234 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion ZIBELLI Ludovic- Gestion des factures{% endblock %}
+
+{% block body %}
+    <div class="container">
+    <h1 class="text-center">Factures</h1>
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('index') }}">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('listeprojet') }}">Projets</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Factures</li>
+        </ol>
+    </nav>
+
+        <div class="card">
+            <div class="card-header">
+                <h4>Chiffre d'affaire</h4>
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-md-3 g-4 text-center">
+                    <div class="col">
+                        <div class="card border-secondary mb-3" style="max-width: 25rem; height: 10rem;  ">
+                            <div class="card-header text-center">CA exercice en cours {{ annee }}</div>
+                            <div class="card-body text-secondary text-center">
+                                <h2>{{ totalPayer }} €</h2>
+                                <p>CA exercice N-1 <strong>{{ totalN1 }} €</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card border-secondary mb-3 g-4" style="max-width: 25rem; height:10rem; ">
+                            <div class="card-header">Factures impayées</div>
+                            <div class="card-body text-secondary text-center">
+                                <h2>{{ totalNonPayer }} €</h2>
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card border-secondary mb-3" style="max-width: 25rem; height: 10rem;    ">
+                            <div class="card-header">Evolution du chiffre d'affaire</div>
+                            <div class="card-body text-secondary text-center">
+                                <h2>{{ taux|number_format(2, '.', ',')}} %</h2>
+                                {% if taux > 0 %}
+                                    <i class="fas fa-arrow-up"></i>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div id="div_chartCA"></div>
+        </div>
+        <br>
+        <br>
+        {{ form_start(form) }}
+        <div class="card text-white bg-light mb-3">
+            <div class="card-header">
+                <h5>Filtrer</h5>
+            </div>
+            <div class="card-body">
+                <div class="form-row align-items-end">
+                    <div class="col">
+                        {{ form_row(form.numeroFacture) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.projet) }}
+                    </div>
+                    <div class="col">
+                        {{ form_row(form.factureDevis) }}
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-block">Rechercher</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+        <br>
+        <h3 class="text-center">Devis en attente</h3>
+        <br>
+        <div class="table-responsive-sm table-responsive-md table-responsive-lg">
+            <table class="table table-bordered table-secondary text-center">
+                <thead>
+                <tr>
+                    <th scope="col">N° de facture</th>
+                    <th scope="col" >Projet associer</th>
+                    <th scope="col" >Date d'édition</th>
+                    <th scope="col" >Date de paiement</th>
+                    <th scope="col" >Montant</th>
+                    <th scope="col" >Année d'exercice</th>
+                    <th scope="col">Editer</th>
+                    <th scope="col">Supprimer</th>
+                </tr>
+                </thead>
+                {% if devis != null %}
+                    {% for facture in devis %}
+                        <tbody>
+                        <tr>
+                            <td class="font-weight-lighter align-middle">{{ facture.numerodefacture }}</td>
+                            <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('tdbprojet', {id: facture.projet.id}) }}">{{ facture.projet }}</a></td>
+                            <td class="font-weight-lighter align-middle">{{ facture.CreatedAt|date("d/m/Y H:i") }}</td>
+                            <td class="font-weight-lighter align-middle">{{ facture.datedepaiement|date("d/m/Y H:i") }}</td>
+                            <td class="font-weight-lighter align-middle">{{ facture.montantfacture}} €</td>
+                            <td class="font-weight-lighter align-middle">{{ facture.AnneeExercice }}</td>
+                            <td class="font-weight-lighter align-middle"><a href="{{ path ('editfacture', {id: facture.id})}}"><i class="fas fa-edit"></i></a></td>
+                            <td class="font-weight-lighter align-middle">
+                                <form method="POST" action="{{ path ('deletefacture', {id: facture.id})}}" style="display:inline-block">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facture.id)}}">
+                                    <button class="btn" onclick="return confirm('Voulez-vous vraiment supprimer cette facture?')"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+
+                    {% endfor %}
+                {% else %}
+                    <tbody>
+                    <tr>
+                        <td colspan="8" class="font-weight-lighter align-middle"> Aucun devis en cours</td>
+                    </tr>
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+        <h3 class="text-center">Factures NON payer</h3>
+        <br>
+        <div class="table-responsive-sm table-responsive-md table-responsive-lg">
+            <table class="table table-bordered table-danger text-center">
+                <thead>
+                <tr>
+                    <th scope="col">N° de facture</th>
+                    <th scope="col" >Projet associer</th>
+                    <th scope="col" >Date d'édition</th>
+                    <th scope="col" >Date de paiement</th>
+                    <th scope="col" >Montant</th>
+                    <th scope="col" >Année d'exercice</th>
+                    <th scope="col">Editer</th>
+                    <th scope="col">Supprimer</th>
+                </tr>
+                </thead>
+                {% if factureNonPayer != null %}
+                    {% for facture in factureNonPayer %}
+                    <tbody>
+                    <tr>
+                        <td class="font-weight-lighter align-middle">{{ facture.numerodefacture }}</td>
+                        <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('tdbprojet', {id: facture.projet.id}) }}">{{ facture.projet }}</a></td>
+                        <td class="font-weight-lighter align-middle">{{ facture.CreatedAt|date("d/m/Y H:i") }}</td>
+                        <td class="font-weight-lighter align-middle">{{ facture.datedepaiement|date("d/m/Y H:i") }}</td>
+                        <td class="font-weight-lighter align-middle">{{ facture.montantfacture}} €</td>
+                        <td class="font-weight-lighter align-middle">{{ facture.AnneeExercice }}</td>
+                        <td class="font-weight-lighter align-middle"><a href="{{ path ('editfacture', {id: facture.id})}}"><i class="fas fa-edit"></i></a></td>
+                        <td class="font-weight-lighter align-middle">
+                            <form method="POST" action="{{ path ('deletefacture', {id: facture.id})}}" style="display:inline-block">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facture.id)}}">
+                                <button class="btn" onclick="return confirm('Voulez-vous vraiment supprimer cette facture?')"><i class="fas fa-trash-alt"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                    {% endfor %}
+                {% else %}
+                    <tbody>
+                    <tr>
+                        <td colspan="8" class="font-weight-lighter align-middle">Aucune facture non payer</td>
+                    </tr>
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+        <br>
+        <h3 class="text-center">Facture Payer</h3>
+        <br>
+        <div class="table-responsive-sm table-responsive-md table-responsive-lg">
+            <table class="table table-bordered text-center table-info">
+                <thead>
+                <tr>
+                    <th scope="col">N° de facture</th>
+                    <th scope="col" >Projet associer</th>
+                    <th scope="col" >Date d'édition</th>
+                    <th scope="col" >Date de paiement</th>
+                    <th scope="col" >Montant</th>
+                    <th scope="col" >Année d'exercice</th>
+                    <th scope="col">Editer</th>
+                    <th scope="col">Supprimer</th>
+                </tr>
+                </thead>
+                {% if facturePayer != null %}
+                    {% for facture in facturePayer %}
+                        <tbody>
+                        <tr>
+                            <td class="font-weight-lighter align-middle">{{ facture.numerodefacture }}</td>
+                            <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('tdbprojet', {id: facture.projet.id}) }}">{{ facture.projet }}</a></td>
+                            <td class="font-weight-lighter align-middle">{{ facture.CreatedAt|date("d/m/Y H:i") }}</td>
+                            <td class="font-weight-lighter align-middle">{{ facture.datedepaiement|date("d/m/Y H:i") }}</td>
+                            <td class="font-weight-lighter align-middle">{{ facture.montantfacture}} €</td>
+                            <td class="font-weight-lighter align-middle">{{ facture.AnneeExercice }}</td>
+                            <td class="font-weight-lighter align-middle"><a href="{{ path ('editfacture', {id: facture.id})}}"><i class="fas fa-edit"></i></a></td>
+                            <td class="font-weight-lighter align-middle">
+                                <form method="POST" action="{{ path ('deletefacture', {id: facture.id})}}" style="display:inline-block">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facture.id)}}">
+                                    <button class="btn" onclick="return confirm('Voulez-vous vraiment supprimer cette facture?')"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    {% endfor %}
+                {% else %}
+                    <tbody>
+                    <tr>
+                        <td colspan="8" class="font-weight-lighter align-middle"> Aucune factures payer</td>
+                    </tr>
+                    </tbody>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        {{ gc_language('fr') }}
+        {{ gc_draw(chartCA, 'div_chartCA') }}
+    </script>
+{% endblock %}

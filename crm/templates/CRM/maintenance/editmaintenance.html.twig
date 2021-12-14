@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification - Plan de Maintenance{% endblock %}
+
+
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Modifier le plan de maintenance</h1>
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Accueil</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('maintenance') }}">Tableau de bord plan de maintenance</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Modification plan de maintenance</li>
+            </ol>
+        </nav>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col">
+                <h5 class="text-center">Titre</h5>
+                {{ form_widget(form.title) }}
+            </div>
+            <div class="col">
+                <h5 class="text-center">Projet associer</h5>
+                {{ form_widget(form.projet) }}
+            </div>
+            <div class="col">
+                <h5 class="text-center">Active</h5>
+                {{ form_widget(form.active) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h5 class="text-center">Déscription</h5>
+                {{ form_widget(form.description) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h5 class="text-center">Date/Heure de debut</h5>
+                {{ form_widget(form.start) }}
+            </div>
+            <div class="col">
+                <h5 class="text-center">Date/Heure de fin</h5>
+                {{ form_widget(form.end) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h5 class="text-center">Couleur de fond</h5>
+                {{ form_widget(form.backgroundcolor) }}
+            </div>
+            <div class="col">
+                <h5 class="text-center">Couleur de bordure</h5>
+                {{ form_widget(form.bordercolor) }}
+            </div>
+            <div class="col">
+                <h5 class="text-center">Couleur de text</h5>
+                {{ form_widget(form.textcolor) }}
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-lg-12">
+                <button class="btn btn-primary btn-block" type="submit">Modifier le plan de maintenance</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

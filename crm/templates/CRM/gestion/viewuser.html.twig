@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion ZIBELLI Ludovic- Gestion des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('listeuser') }}">Liste utilisateurs</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Utilisateur</li>
+                </ol>
+            </nav>
+            <h1 class="text-center">Utilisateur {{ user.nom }} {{ user.prenom }}</h1>
+            <p><i class="fas fa-user"></i><strong> Nom:</strong> {{ user.nom }}</p>
+            <p><i class="fas fa-user"></i><strong> Prenom:</strong> {{ user.prenom }}</p>
+            <p><i class="fas fa-at"></i> <strong> E-mail:</strong> {{ user.email }}</p>
+            <p><i class="fas fa-phone-volume"></i><strong> Téléphone:</strong> {{ user.telephone }}</p>
+            <p><i class="fas fa-briefcase"></i><strong> Poste occuper:</strong> {{ user.poste }}</p>
+            <p><i class="fas fa-calendar-day"></i><strong> Date de creation:</strong> {{ user.CreatedAt|date("d/m/Y H:i") }}</p>
+            <p><i class="fas fa-calendar-day"></i><strong> Date de modification:</strong> {{ user.datemodification|date("d/m/Y H:i") }}</p>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <a class="btn btn-primary btn-block" href="{{ path ('edituser', {id: user.id })}}" role="button"><i class="fas fa-pen"></i> Modifier</a>
+            </div>
+            <div class="col-4">
+                <form method="POST" action="{{ path ('deleteuser', {id: user.id})}}" style="display:inline-block">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id)}}">
+                    <button class="btn btn-danger btn-block" onclick="return confirm('Voulez-vous vraiment supprimer cette utilisateur ?')"><i class="fas fa-trash-alt"></i> Supprimer</button>
+                </form>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+
+{% endblock %}

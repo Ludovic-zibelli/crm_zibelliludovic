@@ -1,0 +1,11 @@
+vich_uploader:
+    db_driver: orm
+
+    mappings:
+        fichiers:
+            uri_prefix: /files/projets
+            upload_destination: '%kernel.project_dir%/files/projets'
+            delete_on_remove: true
+            directory_namer:
+                service: vich_uploader.namer_directory_property
+                options: { property: 'projet.id', transliterate: true } # supposing that the object contains a "slug" attribute or a "getSlug" method

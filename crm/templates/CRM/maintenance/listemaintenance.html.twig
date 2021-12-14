@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste - Maintenance{% endblock %}
+
+
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <h1 class="text-center">Liste des plans de maintenance</h1>
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Accueil</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('maintenance') }}">Tableau de bord plan de maintenance</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Liste plan de maintenance</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="row">
+        <table class="table table-striped table-hover text-center table-vcenter align-middle">
+            <thead>
+            <tr>
+                <th scope="col">Titre</th>
+                <th scope="col">Description</th>
+                <th scope="col">Date de debut</th>
+                <th scope="col">Date de fin</th>
+                <th scope="col">Projet</th>
+                <th scope="col">Date de creation</th>
+                <th scope="col">Active</th>
+                <th scope="col">Editer</th>
+                <th scope="col">Supprimer</th>
+            </tr>
+            </thead>
+            {% if listes != null %}
+            {% for liste in listes  %}
+            <tbody>
+            <tr>
+                <th scope="row" class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('viewmaintenance', {id: liste.id}) }}" >{{ liste.title }}</a></th>
+                <td class="font-weight-lighter align-middle">{{ liste.description }}</td>
+                <td class="font-weight-lighter align-middle">{{ liste.start|date("d/m/Y H:i") }}</td>
+                <td class="font-weight-lighter align-middle">{{ liste.end|date("d/m/Y H:i") }}</td>
+                <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('tdbprojet', {id: liste.projet.id}) }}" >{{ liste.projet.nom }}</a></td>
+                <td class="font-weight-lighter align-middle">{{ liste.creatdat|date("d/m/Y H:i") }}</td>
+                <td class="font-weight-lighter align-middle">
+                    {% if liste.active == true%}
+                        Oui
+                    {% else %}
+                        Non
+                    {% endif %}
+                </td>
+                <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('editmaintenance', {id: liste.id}) }}" ><i class="fas fa-edit"></i></a><a href="#"></a></td>
+                <td class="font-weight-lighter align-middle">
+                    <form method="POST" action="{{ path ('deletemaintenance', {id: liste.id})}}" style="display:inline-block">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ liste.id)}}">
+                        <button class="btn" onclick="return confirm('Voulez-vous vraiment supprimer le plan de maintenance ?')"><i class="fas fa-trash-alt"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <h5 class="text-center">Aucun resultats</h5>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

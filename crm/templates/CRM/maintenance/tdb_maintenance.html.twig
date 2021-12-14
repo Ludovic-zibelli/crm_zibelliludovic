@@ -1,0 +1,276 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord - Maintenance{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="container">
+        {% for message in app.flashes('success')%}
+            <div class="alert alert-success text-center">
+                {{ message }}
+            </div>
+        {% endfor %}
+        <div class="row">
+            <h1 class="text-center">Tableau de bord</h1>
+            <h2 class="text-center">Plans de maintenance</h2>
+            <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('index') }}">Accueil</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Tableau de bord plan de maintenance</li>
+                </ol>
+            </nav>
+            <br>
+                <div class="d-grid gap-2 col-6 mx-auto pb-15">
+                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <i class="fas fa-plus-circle"></i> Nouveau plan de maintenace
+                     </button>
+                 </div>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title text-center" id="exampleModalLabel">Nouveau plan de maintenance</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        {{ form_start(form) }}
+                                        <div class="row text-center">
+                                            <div class="col">
+                                                <h5>Titre</h5>
+                                                {{ form_widget(form.title) }}
+                                            </div>
+                                        </div>
+                                        <div class="row text-center">
+                                            <div class="col">
+                                                <h5>Description</h5>
+                                                {{ form_widget(form.description) }}
+                                            </div>
+                                        </div>
+                                        <div class="row text-center">
+                                            <div class="col">
+                                                <h5>Associer a un projet</h5>
+                                                {{ form_widget(form.projet) }}
+                                            </div>
+                                            <div class="col">
+                                                <h5>Active</h5>
+                                                {{ form_widget(form.active) }}
+                                            </div>
+                                        </div>
+                                        <div class="row text-center align-items-center">
+                                            <div class="col">
+                                                <h5 class="text-center">Date de Debut</h5>
+                                                {{ form_widget(form.start) }}
+                                            </div>
+                                            <div class="col">
+                                                <h5 class="text-center">Date de Fin</h5>
+                                                {{ form_widget(form.end) }}
+                                            </div>
+                                        </div>
+                                        <br>
+                                        <div class="row text-center">
+                                            <div class="col">
+                                                <label>Couleur de fond</label>
+                                                {{ form_widget(form.backgroundcolor) }}
+                                            </div>
+                                            <div class="col">
+                                                <label>Couleur de la bordure</label>
+                                                {{ form_widget(form.bordercolor) }}
+                                            </div>
+
+                                            <div class="col">
+                                                <label>Couleur du text</label>
+                                                {{ form_widget(form.textcolor) }}
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <button class="btn btn-primary btn-block" type="submit">Ajouter</button>
+                                        </div>
+                                        {{ form_end(form) }}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btn-block" data-bs-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        </div>
+        <br>
+        <div class="row">
+            <div id="calendrier">
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row">
+            {{ form_start(form_recherche) }}
+            <div class="card text-white bg-light mb-3">
+                <div class="card-header">
+                    <h5>Filtrer</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-row align-items-end">
+                        <div class="col">
+                            {{ form_row(form_recherche.projet) }}
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block">Rechercher</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{ form_end(form_recherche) }}
+            <br>
+            <br>
+            <div class="col">
+                <br>
+            <div class="card text-center">
+                <div class="card-header">
+                    <h3>Liste plans de maintenance en cours</h3>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-hover text-center table-vcenter align-middle">
+                        <thead>
+                        <tr>
+                            <th scope="col">Titre</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Date de debut</th>
+                            <th scope="col">Date de fin</th>
+                            <th scope="col">Projet</th>
+                            <th scope="col">Date de creation</th>
+                            <th scope="col">Editer</th>
+                            <th scope="col">Supprimer</th>
+                        </tr>
+                        </thead>
+                        {% if resultatActive != null %}
+                        {% for liste in resultatActive  %}
+                        <tbody>
+                        <tr>
+                            <th scope="row" class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('viewmaintenance', {id: liste.id}) }}" >{{ liste.title }}</a></th>
+                            <td class="font-weight-lighter align-middle">{{ liste.description }}</td>
+                            <td class="font-weight-lighter align-middle">{{ liste.start|date("d/m/Y H:i") }}</td>
+                            <td class="font-weight-lighter align-middle">{{ liste.end|date("d/m/Y H:i") }}</td>
+                            <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('tdbprojet', {id: liste.projet.id}) }}" >{{ liste.projet.nom }}</a></td>
+                            <td class="font-weight-lighter align-middle">{{ liste.creatdat|date("d/m/Y H:i") }}</td>
+                            <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('editmaintenance', {id: liste.id}) }}" ><i class="fas fa-edit"></i></a><a href="#"></a></td>
+                            <td class="font-weight-lighter align-middle">
+                                <form method="POST" action="{{ path ('deletemaintenance', {id: liste.id})}}" style="display:inline-block">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ liste.id)}}">
+                                    <button class="btn" onclick="return confirm('Voulez-vous vraiment supprimer le plan de maintenance ?')"><i class="fas fa-trash-alt"></i></button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                        <h5 class="text-center">Aucun resultats</h5>
+                    {% endif %}
+                </div>
+
+            </div>
+            </div>
+            <div class="col">
+                <br>
+                <div class="card text-center">
+                    <div class="card-header">
+                        <h3>Liste plans de maintenance terminer</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if resultatNonActive != null %}
+                        <table class="table table-striped table-hover text-center table-vcenter align-middle">
+                            <thead>
+                            <tr>
+                                <th scope="col">Titre</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Date de debut</th>
+                                <th scope="col">Date de fin</th>
+                                <th scope="col">Projet</th>
+                                <th scope="col">Date de creation</th>
+                                <th scope="col">Editer</th>
+                                <th scope="col">Supprimer</th>
+                            </tr>
+                            </thead>
+
+                            {% for liste in resultatNonActive  %}
+                            <tbody>
+                            <tr>
+                                <th scope="row" class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('viewmaintenance', {id: liste.id}) }}" >{{ liste.title }}</a></th>
+                                <td class="font-weight-lighter align-middle">{{ liste.description }}</td>
+                                <td class="font-weight-lighter align-middle">{{ liste.start|date("d/m/Y H:i") }}</td>
+                                <td class="font-weight-lighter align-middle">{{ liste.end|date("d/m/Y H:i") }}</td>
+                                <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('tdbprojet', {id: liste.projet.id}) }}" >{{ liste.projet.nom }}</a></td>
+                                <td class="font-weight-lighter align-middle">{{ liste.creatdat|date("d/m/Y H:i") }}</td>
+                                <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('editmaintenance', {id: liste.id}) }}" ><i class="fas fa-edit"></i></a><a href="#"></a></td>
+                                <td class="font-weight-lighter align-middle">
+                                    <form method="POST" action="{{ path ('deletemaintenance', {id: liste.id})}}" style="display:inline-block">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ liste.id)}}">
+                                        <button class="btn" onclick="return confirm('Voulez-vous vraiment supprimer le plan de maintenance ?')"><i class="fas fa-trash-alt"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                            <h5 class="text-center">Aucun plan de maintenance terminer</h5>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        <br>
+     </div>
+    </div>
+    <div id="eventContent" title="Event Details" >
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset ('FullCalendar/rrule.min.js')}}"></script>
+    <script src='https://cdn.jsdelivr.net/npm/rrule@2.6.4/dist/es5/rrule.min.js'></script>
+    <script src="{{ asset ('FullCalendar/main.js')}}"></script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendrier');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,dayGridWeek,listMonth'
+                },
+                initialView: 'dayGridMonth',
+                themeSystem: 'bootstrap',
+                locale: 'FR',
+                buttonText: {
+                    today: 'Aujourd\'hui',
+                    month: 'Mois',
+                    week: 'Semaine',
+                    list: 'Liste'
+                },
+                events: {{ datacalendrier|raw }},
+                eventClick: function(calEvent, jsEvent, view) {
+                    var id = calEvent.event.id;
+                    //window.open(calEvent.id);
+                    window.location = "/index/viewmaintenance/"+calEvent.event.id;
+
+                },
+                editable: true,
+                eventResizableFromStart: true,
+
+
+            });
+
+            calendar.render();
+        });
+
+    </script>
+
+{% endblock %}

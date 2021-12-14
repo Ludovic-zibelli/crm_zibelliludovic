@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="ZIBELLI Ludovic">
+    <link rel="shortcut icon" href="{{ asset('/images/logo_zl_5_mini.png') }}" />
+    <title>{% block title %}{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+        <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css">
+        <script src="https://kit.fontawesome.com/4777b5d087.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="{{ asset('pickadate/css/default.css')}}"/>
+        <link rel="stylesheet" href="{{ asset('pickadate/css/default.date.css')}}"/>
+        <link rel="stylesheet" href="{{ asset('FullCalendar/main.css')}}"/>
+
+    {% endblock %}
+    </head>
+<header>
+    <nav class="nav_dek navbar fixed-top navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ path('index') }}">
+            <img src="{{ asset('/images/logo_zl_5.png') }}" width="260" height="100" class="logo_site align-left rounded float-left" alt="CRM ZIBELLI Ludovic">
+
+        </a>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('index') }}"><i class="fas fa-home"></i>Accueil<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-landmark"></i>Clients
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ path('newclient') }}">Nouveau client</a></li>
+                        <li><a class="dropdown-item" href="{{ path('newinterlocuteur') }}">Nouveau contact</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ path('listeclient') }}">Liste clients</a></li>
+                        <li><a class="dropdown-item" href="{{ path('listeinterlocuteur') }}">Liste contacts</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-project-diagram"></i>Projets
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ path('newprojet') }}">Nouveau projet</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ path('listeprojet') }}">Liste projets</a></li>
+                        <li><a class="dropdown-item" href="{{ path('factures') }}">Factures</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-tools"></i>Maintenance
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ path('maintenance') }}">Tableau de bord</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ path('listemaintenance') }}">Liste plan de maintenance</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-tasks"></i>Gestion CRM
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{{ path('listeuser') }}">Gestion utilisateurs</a></li>
+                        <li><a class="dropdown-item" href="{{ path('newcategory') }}">Gestion Category Rapport</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-toolbox"></i>Gestion serveur
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="http://webmail.zibelli-ludovic.fr/">WEB Mail zibelli-ludovic.fr</a></li>
+                        <li><a class="dropdown-item" href="http://postfixadmin.zibelli-ludovic.fr">Postfix</a></li>
+                        <li><a class="dropdown-item" href="http://phpmyadmin.zibelli-ludovic.fr/">Phpmyadmin</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav justify-content-end">
+                <li class="nav-item text-center">
+                    {% if app.user %}
+                        <a class="nav-link" href="{{ path('app_logout') }}"><svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="feather feather-power"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg></a>{{ app.user.prenom }}
+                    {% else %}
+                    <a class="nav-link" href="{{ path('login') }}">Connexion</a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+</header>
+<body>
+{% block body %}
+{% endblock %}
+        {% block javascripts %}
+
+        {% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/jquery-3.2.1.min.js') }}"></script>
+
+
+</body>
+
+<footer class="mt-10 sm lg md">
+    <br>
+    <div class="row text-center">
+        <div class="col-md-4 col-lg-4 col-sm-4 center-block">
+            <p><strong>Reseau social</strong></p>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4">
+            <p><i class="far fa-copyright"></i>2021 ZIBELLI Ludovic</p>
+            <p>Réaliser par ZIBELLI Ludovic</p>
+        </div>
+        <div class="col-md-4 col-lg-4 col-sm-4">
+            <ul>
+                <li>
+
+                <li><a class="nav-link" href="#">Mention legales</a></li>
+                <li><p><strong>Version du site 1.0</strong></p></li>
+                <li><p>Derniere mise a jours 16 avril 2021</p></li>
+            </ul>
+
+
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-12">
+
+        </div>
+    </div>
+
+</footer>
+
+</html>

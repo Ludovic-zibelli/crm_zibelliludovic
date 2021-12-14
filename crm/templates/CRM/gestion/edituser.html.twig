@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion ZIBELLI Ludovic- Modifier un utilisateur{% endblock %}
+
+{% block body %}
+    <div class="container-xl">
+        <div class="row">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('listeuser') }}">Liste utilisateurs</a></li>
+                    <li class="breadcrumb-item"><a href="{{ path ('show.user', {id: id })}}">Utilisateur</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Edit utilisateur</li>
+                </ol>
+            </nav>
+            <h1 class="text-center">Modifier</h1>
+            <br>
+            <a href="" class="text-center">Retour</a>
+            {{ form_start(form) }}
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            {{ form_row(form.nom) }}
+                        </div>
+                        <div class="col-6">
+                            {{ form_row(form.prenom) }}
+                        </div>
+                        <div class="col-6">
+                            {{ form_row(form.email) }}
+                        </div>
+                        <div class="col-6">
+                            {{ form_row(form.telephone) }}
+                        </div>
+                        <div class="col-6">
+                            {{ form_row(form.role) }}
+                        </div>
+                        <div class="col-6">
+                            {{ form_row(form.poste) }}
+                        </div>
+                        <div class="col-12">
+                            <label>Mot de passe</label>
+                            {{ form_widget(form.password) }}
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary btn-block">Modifier</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+{% endblock %}

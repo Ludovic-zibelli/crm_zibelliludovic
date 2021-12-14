@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion ZIBELLI Ludovic- Fiche contact{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <h1 class="text-center">Fiche contact</h1>
+        </div>
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Accueil</a></li>
+                <li class="breadcrumb-item" aria-current="page"><a href="{{ path('listeinterlocuteur') }}">Liste contacts</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Fiche contact</li>
+            </ol>
+        </nav>
+        <br>
+        <div class="row">
+            <table class="table text-center">
+                <tr>
+                    <th class="table-secondary">Nom</th>
+                    <td>{{ inter.nom }}</td>
+                </tr>
+                <tr>
+                    <th class="table-secondary">Prènom</th>
+                    <td>{{ inter.prenom }}</td>
+                </tr>
+                <tr>
+                    <th class="table-secondary">Poste</th>
+                    <td>{{ inter.poste }}</td>
+                </tr>
+            </table>
+            <br>
+            <h5 class="text-center">Coordonnées</h5>
+                <table class="table text-center">
+                    <tr>
+                        <th class="table-secondary"><i class="fas fa-phone-alt"></i>N° de téléphone</th>
+                        <td>{{ inter.telephone}}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-secondary"><i class="fas fa-envelope-open-text"></i>E-mail</th>
+                        <td>{{ inter.email }}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-secondary"><i class="fab fa-skype"></i>Skype</th>
+                        <td>{{ inter.skype }}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-secondary"><i class="fab fa-linkedin"></i>Linkedin</th>
+                        <td>{{ inter.linkedin }}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-secondary">Date de création</th>
+                        <td>{{ inter.CreatedAt|date("d/m/Y H:i") }}</td>
+                    </tr>
+                    <tr>
+                        <th class="table-secondary">Date de modification</th>
+                        <td>{{ inter.datemodification|date("d/m/Y H:i") }}</td>
+                    </tr>
+                </table>
+        </div>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-primary btn-block" href="{{ path ('editinterlocuteur', {id: inter.id})}}">EDITER</a>
+            </div>
+            <div class="col">
+                <form method="POST" action="{{ path ('deleteinterlocuteur', {id: inter.id})}}" style="">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ inter.id)}}">
+                    <button class="btn btn-danger btn-block" onclick="return confirm('Voulez-vous vraiment supprimer cette interlocuteur?')">SUPPRIMER</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,205 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion ZIBELLI Ludovic- Fiche client{% endblock %}
+
+{% block body %}
+
+
+
+<div class="container">
+    <h1 class="text-center">Fiche société</h1>
+    <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ path('index') }}">Accueil</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><a href="{{ path('listeclient') }}">Liste clients</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Fiche client</li>
+        </ol>
+    </nav>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title text-center">Information de la société {{ client.nom }}</h5>
+        </div>
+        <div class="card-body">
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <th scope="col">N° client</th>
+                    <th scope="col" >Nom de la société</th>
+                    <th scope="col" >Raison sociale</th>
+                    <th scope="col" >Numéro de siret</th>
+                    <th scope="col" >Type de société</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ client.id }}</td>
+                    <td>{{ client.nom }}</td>
+                    <td>{{ client.raisonsociale }}</td>
+                    <td>{{ client.numerosiret }}</td>
+                    <td>{{ client.genredesociete }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <h5 class="card-title">Coordonnées de la société</h5>
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <th scope="col">N° de téléphone</th>
+                    <th scope="col" >E-mail</th>
+                    <th scope="col" >Adresse postal</th>
+                    <th scope="col" >Ville</th>
+                    <th scope="col" >Code postale</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ client.telephone }}</td>
+                    <td>{{ client.email }}</td>
+                    <td>{{ client.adressepostal }}</td>
+                    <td>{{ client.ville }}</td>
+                    <td>{{ client.codepostal }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <th scope="col">Site web</th>
+                    <th scope="col" >Adresse Facebook</th>
+                    <th scope="col" >Adresse Twitter</th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ client.siteweb }}</td>
+                    <td>{{ client.facebook }}</td>
+                    <td>{{ client.twitter }}</td>
+
+                </tr>
+                </tbody>
+            </table>
+            <h5 class="card-title">Autres informations</h5>
+            <p class="card-text">{{ client.autreinfos|striptags }}</p>
+            <table class="table text-center">
+                <thead>
+                <tr>
+                    <th scope="col">Date de creation</th>
+                    <th scope="col" >Date de modification</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ client.CreatedAt|date("d/m/Y H:i") }}</td>
+                    <td>{{ client.datemodification|date("d/m/Y H:i") }}</td>
+                </tr>
+                </tbody>
+            </table>
+            <a href="{{ path ('editclient', {id: client.id})}}" class="btn btn-primary text-center">Modifier la fiche</a>
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title text-center">Interlocuteur</h5>
+        </div>
+        <div class="card-body">
+            {% for inter in client.interlocuteurs %}
+                <table class="table text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">Nom</th>
+                        <th scope="col" >Prenom</th>
+                        <th scope="col" >Poste</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ inter.nom }}</td>
+                        <td>{{ inter.prenom }}</td>
+                        <td>{{ inter.poste }}</td>
+
+                    </tr>
+                    </tbody>
+                </table>
+                <h5 class="card-title">Coordonnées</h5>
+                <table class="table text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">N° de téléphone</th>
+                        <th scope="col" >E-mail</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ inter.telephone}}</td>
+                        <td>{{ inter.email }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="table text-center">
+                    <thead>
+                    <tr>
+                        <th scope="col">Date de creation</th>
+                        <th scope="col" >Date de modification</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ inter.CreatedAt|date("d/m/Y H:i") }}</td>
+                        <td>{{ inter.datemodification|date("d/m/Y H:i") }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            {% endfor %}
+        </div>
+    </div>
+    <br>
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title text-center">Liste des projets</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover text-center">
+                <thead>
+                <tr>
+                    <th scope="col">Nom du projet</th>
+                    <th scope="col" >Type de projet</th>
+                    <th scope="col" >Avancement du projet</th>
+                    <th scope="col" >Statu du projet</th>
+                    <th scope="col" >Actions</th>
+                </tr>
+                </thead>
+                {% for projet in client.projet %}
+                <tbody>
+                <tr>
+                    <td>{{ projet.nom }}</td>
+                    <td>{{ projet.typeprojet }}</td>
+                    <td>{{ projet.avancementprojet }}</td>
+                    <td>
+                        {% if projet.statut == true %}
+                            <p>Terminer</p>
+                        {% else %}
+                            <p>En cours</p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                Actions
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <li><a class="dropdown-item" href="#">Voir la fiche</a></li>
+                                <li><a class="dropdown-item" href="#">Supprimer</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

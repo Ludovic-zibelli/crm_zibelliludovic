@@ -1,0 +1,23 @@
+{
+    "name": "rohnstock/pickadate",
+    "description": "The mobile-friendly, responsive, and lightweight jQuery date & time input picker.",
+    "type": "component",
+    "homepage": "https://github.com/amsul/pickadate.js",
+    "license": "MIT",
+    "keywords": [
+        "charts"
+    ],
+    "author": {
+        "url": "http://amsul.ca/pickadate.js/",
+        "name": "Amsul"
+    },
+    "extra": {
+        "component": {
+            "files": [
+                "css/*.css",
+                "js/*.js",
+                "translations/*.js"
+            ]
+        }
+    }
+}

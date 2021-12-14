@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion ZIBELLI Ludovic- CRM Nouveau contact{% endblock %}
+
+{% block body %}
+    {{ form_start(form) }}
+    <div class="container">
+        <h1 class="text-center">Ajouter un contact</h1>
+
+        <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ path('index') }}">Accueil</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Nouveau contact</li>
+            </ol>
+        </nav>
+            <br>
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Nom</h6>
+                        {{ form_widget(form.nom) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Prenom</h6>
+                        {{ form_widget(form.prenom) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Poste dans la societé</h6>
+                        {{ form_widget(form.poste) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-envelope-open-text"></i>E-mail</h6>
+                        {{ form_widget(form.email) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted"><i class="fas fa-phone-alt"></i>Numéro de téléphone</h6>
+                        {{ form_widget(form.telephone) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted"><i class="fab fa-skype"></i>Skype</h6>
+                        {{ form_widget(form.skype) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted"><i class="fab fa-linkedin"></i>Linkedin</h6>
+                        {{ form_widget(form.linkedin) }}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-6">
+                        <h6 class="card-subtitle mb-2 text-muted">Associer a une societé</h6>
+                        {{ form_widget(form.societe) }}
+                    </div>
+                    <br>
+
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <button class="btn btn-primary btn-block" type="submit">Ajouter un nouvelle interlocuteur</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
