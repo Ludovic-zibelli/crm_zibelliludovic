@@ -25,7 +25,7 @@
             <table class="table table-striped table-hover text-center">
                 <thead class="table-light">
                 <tr>
-                    <th scope="col">N° identification</th>
+                    <th scope="col">ID</th>
                     <th scope="col" >Nom</th>
                     <th scope="col" >Prenom</th>
                     <th scope="col" >E-mail</th>
@@ -33,19 +33,29 @@
                     <th scope="col" >Poste</th>
                     <th scope="col">Date de création</th>
                     <th scope="col">Date de modification</th>
+                    <th scope="col">Editer</th>
+                    <th scope="col">Supprimer</th>
                 </tr>
                 </thead>
                 <tbody>
             {% for users in listeuser %}
                 <tr>
-                    <th><a class="dropdown-item" href="{{ path ('show.user', {id: users.id })}}">{{ users.id }}</a></th>
-                    <th>{{ users.nom }}</th>
-                    <th>{{ users.prenom }}</th>
-                    <th>{{ users.email }}</th>
-                    <th>{{ users.telephone }}</th>
-                    <th>{{ users.poste }}</th>
-                    <th>{{ users.CreatedAt|date("d/m/Y H:i") }}</th>
-                    <th>{{ users.datemodification|date("d/m/Y H:i") }}</th>
+                    <th class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path ('show.user', {id: users.id })}}">{{ users.id }}</a></th>
+                    <th class="font-weight-lighter align-middle">{{ users.nom }}</th>
+                    <th class="font-weight-lighter align-middle">{{ users.prenom }}</th>
+                    <th class="font-weight-lighter align-middle">{{ users.email }}</th>
+                    <th class="font-weight-lighter align-middle">{{ users.telephone }}</th>
+                    <th class="font-weight-lighter align-middle">{{ users.poste }}</th>
+                    <th class="font-weight-lighter align-middle">{{ users.CreatedAt|date("d/m/Y H:i") }}</th>
+                    <th class="font-weight-lighter align-middle">{{ users.datemodification|date("d/m/Y H:i") }}</th>
+                    <th class="font-weight-lighter align-middle"><a href="{{ path ('edituser', {id: users.id})}}"><i class="fas fa-edit"></i></a></th>
+                    <th class="font-weight-lighter align-middle">
+                        <form method="POST" action="{{ path ('deleteuser', {id: users.id})}}" style="display:inline-block">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ users.id)}}">
+                            <button class="btn" onclick="return confirm('Voulez-vous vraiment supprimer cette utilisateur?')"><i class="fas fa-trash-alt"></i></button>
+                        </form>
+                    </th>
                 </tr>
             {% endfor %}
                 </tbody>

@@ -168,13 +168,12 @@
                     <th scope="col" >Type de projet</th>
                     <th scope="col" >Avancement du projet</th>
                     <th scope="col" >Statu du projet</th>
-                    <th scope="col" >Actions</th>
                 </tr>
                 </thead>
                 {% for projet in client.projet %}
                 <tbody>
                 <tr>
-                    <td>{{ projet.nom }}</td>
+                    <td><a class="dropdown-item" href="{{ path('tdbprojet', {id: projet.id}) }}" >{{ projet.nom }}</a></td>
                     <td>{{ projet.typeprojet }}</td>
                     <td>{{ projet.avancementprojet }}</td>
                     <td>
@@ -183,17 +182,6 @@
                         {% else %}
                             <p>En cours</p>
                         {% endif %}
-                    </td>
-                    <td>
-                        <div class="btn-group" role="group">
-                            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Actions
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                <li><a class="dropdown-item" href="#">Voir la fiche</a></li>
-                                <li><a class="dropdown-item" href="#">Supprimer</a></li>
-                            </ul>
-                        </div>
                     </td>
                 </tr>
                 {% endfor %}

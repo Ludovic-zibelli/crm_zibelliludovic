@@ -24,8 +24,8 @@
             <div class="col-4">
                 <a class="btn btn-primary btn-block" href="{{ path ('edituser', {id: user.id })}}" role="button"><i class="fas fa-pen"></i> Modifier</a>
             </div>
-            <div class="col-4">
-                <form method="POST" action="{{ path ('deleteuser', {id: user.id})}}" style="display:inline-block">
+            <div class="col-4 text-center">
+                <form method="POST" action="{{ path ('deleteuser', {id: user.id})}}" style="">
                     <input type="hidden" name="_method" value="DELETE">
                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id)}}">
                     <button class="btn btn-danger btn-block" onclick="return confirm('Voulez-vous vraiment supprimer cette utilisateur ?')"><i class="fas fa-trash-alt"></i> Supprimer</button>

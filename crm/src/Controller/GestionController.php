@@ -177,7 +177,7 @@ class GestionController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $this->em->flush();
-            $this->addFlash('success', 'Interlocuteur modifier avec succès');
+            $this->addFlash('success', 'Utilisateur modifier avec succès');
             return $this->redirectToRoute('listeuser');
         }
         return $this->render('CRM/gestion/edituser.html.twig',[
