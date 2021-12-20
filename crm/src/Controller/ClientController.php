@@ -104,7 +104,6 @@ class ClientController extends AbstractController
     public function viewClient($id)
     {
         $client = $this->societesRepository->find($id);
-        dump($client);
         return $this->render('CRM/clients/viewclient.html.twig',
             array('client' => $client)
         );
@@ -262,7 +261,6 @@ class ClientController extends AbstractController
     public function viewContact($id)
     {
         $contact = $this->interlocuteursRepository->find($id);
-        dump($contact);
         return $this->render('CRM/clients/viewcontact.html.twig',
             array('inter' => $contact)
         );

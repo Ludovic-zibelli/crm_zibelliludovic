@@ -89,14 +89,14 @@ class ProjetController extends AbstractController
 
             $resultats = $this->projetRepository->findSearch($searchProjet);
             $qd = count($resultats);
-            return $this->render('CRM/projet/listeprojet.html.twig',[
+            return $this->render('CRM/Projet/listeprojet.html.twig',[
                 'form' => $form->createView(),
                 'listeprojet' => $resultats,
                 'qd' => $qd
             ]);
         }
-        dump($listeprojet);
-        return $this->render('CRM/projet/listeprojet.html.twig',[
+
+        return $this->render('CRM/Projet/listeprojet.html.twig',[
             'listeprojet' => $listeprojet,
             'form' => $form->createView(),
             'qd' => 0
@@ -124,7 +124,6 @@ class ProjetController extends AbstractController
         $user = $userRepository->find($userId);
 
 
-        dump($projet);
         $from_fichier->handleRequest($request);
         $from_rapport->handleRequest($request);
         $from_facture->handleRequest($request);
@@ -213,7 +212,7 @@ class ProjetController extends AbstractController
             $this->addFlash('success', 'Rapport modifier avec succès');
             return $this->redirectToRoute('tdbprojet', ['id' => $id]);
         }
-        dump($tableauDeBord);
+
         return $this->render('CRM/Projet/editrapport.html.twig',[
             'tableaubord' => $tableauDeBord,
             'form' => $form->createView()
@@ -266,7 +265,7 @@ class ProjetController extends AbstractController
             return $this->redirectToRoute('tdbprojet', ['id' => $id]);
         }
         $id = $facture->getProjet()->getId();
-        return $this->render('CRM/projet/editfacture.html.twig',[
+        return $this->render('CRM/Projet/editfacture.html.twig',[
             'form' => $form->createView(),
             'id' => $id,
             'nom' => $nomProjet
@@ -327,7 +326,7 @@ class ProjetController extends AbstractController
         if($form->isSubmitted() && $form->isValid())
         {
             $resultat = $this->facturesRepository->findSearch($rechercheFacture);
-            return $this->render('CRM/projet/factureresultat.html.twig',[
+            return $this->render('CRM/Projet/factureresultat.html.twig',[
                 'resultat' => $resultat
             ]);
         }

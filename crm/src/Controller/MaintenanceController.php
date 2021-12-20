@@ -135,7 +135,6 @@ class MaintenanceController extends AbstractController
     public function viewMaintenance($id)
     {
         $plan = $this->calendrierMaintenanceRepository->find($id);
-        dump($plan);
         return $this->render('CRM/maintenance/viewmaintenance.html.twig',
             array('plan' => $plan)
         );

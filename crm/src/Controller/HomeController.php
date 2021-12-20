@@ -57,7 +57,6 @@ class HomeController extends AbstractController
         $projet = $this->projetRepository->findLatest();
         $projetTerminer = $this->projetRepository->findLatestStatut();
         $rapports = $this->tableauDeBord->findLatest();
-        dump($projetTerminer);
         $listeMaintenance = $this->calendrierMaintenanceRepository->findAll();
         $planig = [];
 
