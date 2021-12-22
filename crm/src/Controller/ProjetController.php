@@ -172,7 +172,7 @@ class ProjetController extends AbstractController
      * @param Request $request
      * @param Projet $projet
      */
-    public function editClient(Request $request, Projet $projet)
+    public function editProjet(Request $request, Projet $projet)
     {
         $form = $this->createForm(ProjetType::class, $projet);
         $form->handleRequest($request);
@@ -180,7 +180,7 @@ class ProjetController extends AbstractController
         {
             $projet->setDateModification(new \DateTime());
             $this->em->flush();
-            $this->addFlash('success', 'Client modifier avec succès');
+            $this->addFlash('success', 'Projet modifier avec succès');
             return $this->redirectToRoute('listeprojet');
         }
         return $this->render('CRM/Projet/editprojet.html.twig',[
@@ -218,6 +218,31 @@ class ProjetController extends AbstractController
             'form' => $form->createView()
         ]);
 
+    }
+
+    //Suppression de projet
+
+    /**
+     *  /**
+     * @Route("/index/deleteprojet/{id}", name="deleteprojet" , methods="DELETE")
+     * @IsGranted("ROLE_ADMIN")
+     * @param Projet $projet
+     * @param Request $request
+     * @return Response
+     */
+
+    public function deleteProjet(Projet $projet, Request $request)
+    {
+        if($this->isCsrfTokenValid('delete'. $projet->getId(), $request->get('_token')))
+        {
+
+            $this->em->remove($projet);
+            $this->em->flush();
+            $this->addFlash('success', 'Projet supprimer avec succès');
+            return $this->redirectToRoute('listeprojet');
+
+        }
+        return $this->redirectToRoute('listeclient');
     }
 
     //Suppression de rapport

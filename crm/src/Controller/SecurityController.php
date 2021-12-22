@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Notifications\factureNotification;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -14,16 +15,19 @@ class SecurityController extends AbstractController
 
     /**
      * @Route("/", name="login")
-     * @param Request $request
+     * @param AuthenticationUtils $AuthenticationUtils
+     * @param factureNotification $factureNotification
      * @return Response
      */
-    public function login(AuthenticationUtils $AuthenticationUtils)
+    public function login(AuthenticationUtils $AuthenticationUtils, factureNotification $factureNotification )
     {
         $error = $AuthenticationUtils->getLastAuthenticationError();
         $lastUsername = $AuthenticationUtils->getLastUsername();
+        $annee = $factureNotification->recupAnnee();
         return $this->render('CRM/login.html.twig', [
             'last_user' => $lastUsername,
-            'error' => $error
+            'error' => $error,
+            'annee' => $annee
         ]);
     }
 

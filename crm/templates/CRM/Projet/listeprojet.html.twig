@@ -71,10 +71,20 @@
                 <tr>
                     <td class="font-weight-lighter align-middle">{{ liste.id }}</td>
                     <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('tdbprojet', {id: liste.id}) }}">{{ liste.nom }}</a></td>
+                    {% if liste.societe != null %}
                     {% for societe in liste.societe %}
-                        <td>{{ societe.nom }}</td>
+                        <td class="font-weight-lighter align-middle">{{ societe.nom|striptags|slice(0, 20)|raw }}</td>
                     {% endfor %}
+                    {% elseif %}
+                        <td class="font-weight-lighter align-middle">N/A</td>
+                    {% endif %}
                     <td class="font-weight-lighter align-middle">
+                        {% if liste.avancementprojet == 'demarchage' %}
+                            Démarchage commercial
+                        {% endif %}
+                        {% if liste.avancementprojet == 'devis' %}
+                            Devis en attente d'accord
+                        {% endif %}
                         {% if liste.avancementprojet == 'intialisation' %}
                             Phase d'initialisation
                         {% endif %}
@@ -100,12 +110,12 @@
                     </td>
                     <td class="font-weight-lighter align-middle">{{ liste.CreatedAt|date("d/m/Y H:i") }}</td>
                     <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="#"><i class="fas fa-address-card"></i></a></td>
-                    <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path ('editclient', {id: liste.id})}}"><i class="fas fa-edit"></i></a></td>
+                    <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path ('editprojet', {id: liste.id})}}"><i class="fas fa-edit"></i></a></td>
                     <td class="font-weight-lighter align-middle">
-                        <form method="POST" action="{{ path ('deleteclient', {id: liste.id})}}" style="display:inline-block">
+                        <form method="POST" action="{{ path ('deleteprojet', {id: liste.id})}}" style="display:inline-block">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ liste.id)}}">
-                            <button class="btn" onclick="return confirm('Voulez-vous vraiment supprimer ce client?')"><i class="fas fa-trash-alt"></i></button>
+                            <button class="btn" onclick="return confirm('Voulez-vous vraiment supprimer le projet ?')"><i class="fas fa-trash-alt"></i></button>
                         </form>
                     </td>
                 </tr>

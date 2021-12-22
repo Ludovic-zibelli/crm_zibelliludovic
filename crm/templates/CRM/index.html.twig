@@ -109,7 +109,6 @@
                                 <tr>
                                     <th scope="col">ID projet</th>
                                     <th scope="col">Nom du projet</th>
-                                    <th scope="col">Société</th>
                                     <th scope="col">Type de projet</th>
                                     <th scope="col">Avancement du projet</th>
                                     <th scope="col">Date de création</th>
@@ -119,10 +118,15 @@
                                 <tbody>
                                 <tr>
                                     <th class="font-weight-lighter align-middle" scope="row">{{ listeprojet.id }}</th>
-                                    <td class="font-weight-lighter align-middle"><a  class="dropdown-item" href="{{ path('tdbprojet', {id: listeprojet.id}) }}" role="button">{{ listeprojet.nom }}</a></td>
-                                    <td class="font-weight-lighter align-middle"></td>
+                                    <td class="font-weight-lighter align-middle"><a  class="dropdown-item" href="{{ path('tdbprojet', {id: listeprojet.id}) }}" role="button">{{ listeprojet.nom|striptags|slice(0, 20)|raw }}</a></td>
                                     <td class="font-weight-lighter align-middle">{{ listeprojet.typeprojet }}</td>
                                     <td class="font-weight-lighter align-middle">
+                                        {% if liste.avancementprojet == 'demarchage' %}
+                                            Démarchage commercial
+                                        {% endif %}
+                                        {% if liste.avancementprojet == 'devis' %}
+                                            Devis en attente d'accord
+                                        {% endif %}
                                         {% if listeprojet.avancementprojet == 'intialisation' %}
                                             Phase d'initialisation
                                         {% endif %}
@@ -157,7 +161,6 @@
                                     <th scope="col">Societé</th>
                                     <th scope="col">Paiment</th>
                                     <th scope="col">Date de cloture</th>
-                                    <th scope="col">Nbr rapports</th>
                                 </tr>
                                 </thead>
                                 {% for listeprojet in projetTerminer  %}
@@ -165,7 +168,15 @@
                                 <tr>
                                     <th class="font-weight-lighter align-middle" scope="row">{{ listeprojet.id }}</th>
                                     <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('tdbprojet', {id: listeprojet.id}) }}" >{{ listeprojet.nom }}</a></td>
-                                    <td class="font-weight-lighter align-middle">{% for societe in listeprojet.societe %}{{ societe.nom }}{% endfor %}</td>
+                                    <td class="font-weight-lighter align-middle">
+                                        {% if listeprojet.societe != null %}
+                                            {% for societe in listeprojet.societe %}
+                                                {{ societe.nom }}
+                                            {% endfor %}
+                                        {% elseif %}
+                                            N/A
+                                        {% endif %}
+                                    </td>
                                     <td class="font-weight-lighter align-middle">
                                         {% for facture in listeprojet.facture %}
                                             {% if facture.payer != true %}
@@ -176,7 +187,6 @@
                                         {% endfor %}
                                     </td>
                                     <td class="font-weight-lighter align-middle">{{ listeprojet.DateModification|date("d/m/Y H:i") }}</td>
-                                    <td class="font-weight-lighter align-middle"></td>
                                 </tr>
                                 {% endfor %}
                                 </tbody>

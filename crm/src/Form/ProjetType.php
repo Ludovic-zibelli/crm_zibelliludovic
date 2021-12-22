@@ -19,6 +19,8 @@ class ProjetType extends AbstractType
             ->add('langage')
             ->add('avancement_projet', ChoiceType::class,[
                 'choices' => [
+                    'Démarchage' => 'demarchage',
+                    'Devis en attente' => 'devis',
                     'Phase d\'initialisation' => 'intialisation',
                     'Phase de lancement' => 'lancement',
                     'Phase de conception' => 'conception',
