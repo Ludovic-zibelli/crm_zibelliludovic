@@ -121,10 +121,10 @@
                                     <td class="font-weight-lighter align-middle"><a  class="dropdown-item" href="{{ path('tdbprojet', {id: listeprojet.id}) }}" role="button">{{ listeprojet.nom|striptags|slice(0, 20)|raw }}</a></td>
                                     <td class="font-weight-lighter align-middle">{{ listeprojet.typeprojet }}</td>
                                     <td class="font-weight-lighter align-middle">
-                                        {% if liste.avancementprojet == 'demarchage' %}
+                                        {% if listeprojet.avancementprojet == 'demarchage' %}
                                             Démarchage commercial
                                         {% endif %}
-                                        {% if liste.avancementprojet == 'devis' %}
+                                        {% if listeprojet.avancementprojet == 'devis' %}
                                             Devis en attente d'accord
                                         {% endif %}
                                         {% if listeprojet.avancementprojet == 'intialisation' %}
@@ -173,7 +173,7 @@
                                             {% for societe in listeprojet.societe %}
                                                 {{ societe.nom }}
                                             {% endfor %}
-                                        {% elseif %}
+                                        {% else %}
                                             N/A
                                         {% endif %}
                                     </td>
@@ -196,6 +196,10 @@
                 </div>
 
             </div>
+        <br>
+        <div class="row">
+            <iframe src="https://calendar.google.com/calendar/embed?src=ohkflt82ef0tvo2p0c1qqsgvfc%40group.calendar.google.com&ctz=Europe%2FParis" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+        </div>
         <br>
             <div class="card">
                 <div class="card-header">

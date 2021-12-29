@@ -71,3 +71,8 @@ td
 {
     word-break: break-all;
 }
+
+th
+{
+    font-size: 5px;
+}

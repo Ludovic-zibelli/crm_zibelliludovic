@@ -66,6 +66,14 @@
                             </tr>
                             <tr>
                                 <td>
+                                    {% if projet.avancementprojet == 'demarchage' %}
+                                        {% set pourcentage = 0 %}
+                                        Démarchage
+                                    {% endif %}
+                                    {% if projet.avancementprojet == 'devis' %}
+                                        {% set pourcentage = 0 %}
+                                        Devis en attente
+                                    {% endif %}
                                     {% if projet.avancementprojet == 'intialisation' %}
                                         {% set pourcentage = 20 %}
                                         Phase d'initialisation

@@ -153,6 +153,7 @@ class ProjetController extends AbstractController
             $this->em->flush();
             $this->addFlash('success', 'Facture ajouter avec succes');
         }
+        dump($projet);
 
         return $this->render('CRM/Projet/tdb_projet.html.twig',[
             'projet' => $projet,
@@ -223,7 +224,7 @@ class ProjetController extends AbstractController
     //Suppression de projet
 
     /**
-     *  /**
+     *
      * @Route("/index/deleteprojet/{id}", name="deleteprojet" , methods="DELETE")
      * @IsGranted("ROLE_ADMIN")
      * @param Projet $projet

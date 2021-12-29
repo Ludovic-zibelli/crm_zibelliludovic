@@ -70,14 +70,13 @@
                 {% for liste in listeprojet %}
                 <tr>
                     <td class="font-weight-lighter align-middle">{{ liste.id }}</td>
-                    <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('tdbprojet', {id: liste.id}) }}">{{ liste.nom }}</a></td>
-                    {% if liste.societe != null %}
-                    {% for societe in liste.societe %}
-                        <td class="font-weight-lighter align-middle">{{ societe.nom|striptags|slice(0, 20)|raw }}</td>
-                    {% endfor %}
-                    {% elseif %}
-                        <td class="font-weight-lighter align-middle">N/A</td>
+                    <td class="font-weight-lighter align-middle"><a class="dropdown-item" href="{{ path('tdbprojet', {id: liste.id}) }}">{{ liste.nom|striptags|slice(0, 20)|raw }}</a></td>
+                    {% if liste.societe %}
+                        {% for societe in liste.societe %}
+                            <td class="font-weight-lighter align-middle">{{ societe.nom }}</td>
+                        {% endfor %}
                     {% endif %}
+
                     <td class="font-weight-lighter align-middle">
                         {% if liste.avancementprojet == 'demarchage' %}
                             Démarchage commercial
